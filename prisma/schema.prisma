@@ -71,3 +71,10 @@ model TailorJob {
   criticScore    Int?
   loopsRun       Int      @default(0)
 }
+
+model Skill {
+  id       String   @id @default(cuid())
+  name     String   @unique
+  category String
+  aliases  String[]
+}
