@@ -13,6 +13,7 @@ export default async function ResumePage({ params }: { params: { id: string } })
   return (
     <main style={{ maxWidth: 720, margin: "4rem auto", fontFamily: "sans-serif" }}>
       <h1>Extracted text</h1>
+      <p>Extraction method: {resume.extractionMethod}</p>
       <pre style={{ whiteSpace: "pre-wrap", background: "#f5f5f5", padding: "1rem" }}>
         {resume.rawText}
       </pre>

@@ -54,11 +54,12 @@ model VerificationToken {
 }
 
 model Resume {
-  id         String      @id @default(cuid())
-  userId     String
-  user       User        @relation(fields: [userId], references: [id])
-  rawText    String
-  tailorings TailorJob[]
+  id               String      @id @default(cuid())
+  userId           String
+  user             User        @relation(fields: [userId], references: [id])
+  rawText          String
+  extractionMethod String      @default("text")
+  tailorings       TailorJob[]
 }
 
 model TailorJob {
