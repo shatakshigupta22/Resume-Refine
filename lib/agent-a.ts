@@ -1,12 +1,22 @@
 import Anthropic from "@anthropic-ai/sdk"
 
-export async function draftTailoredBullets(resumeText: string, jobDescription: string): Promise<string> {
+export async function draftTailoredBullets(
+  resumeText: string,
+  jobDescription: string,
+  previousAttempt?: string,
+  feedback?: string
+): Promise<string> {
   const mcpServerUrl = process.env.MCP_SERVER_URL
   if (!mcpServerUrl) {
     throw new Error("MCP_SERVER_URL is not set")
   }
 
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
+  const userContent =
+    previousAttempt && feedback
+      ? `Resume:\n${resumeText}\n\nJob description:\n${jobDescription}\n\nPrevious draft:\n${previousAttempt}\n\nRecruiter feedback on the previous draft:\n${feedback}\n\nRevise the previous draft based on this feedback rather than starting fresh.`
+      : `Resume:\n${resumeText}\n\nJob description:\n${jobDescription}`
 
   const message = await anthropic.beta.messages.create({
     model: process.env.ANTHROPIC_MODEL || "claude-haiku-4-5-20251001",
@@ -19,7 +29,7 @@ export async function draftTailoredBullets(resumeText: string, jobDescription: s
     messages: [
       {
         role: "user",
-        content: `Resume:\n${resumeText}\n\nJob description:\n${jobDescription}`,
+        content: userContent,
       },
     ],
   })

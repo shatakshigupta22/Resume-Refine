@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
-import { draftTailoredBullets } from "@/lib/agent-a"
+import { runCriticLoop } from "@/lib/critic-loop"
 
 export async function POST(request: NextRequest) {
   const session = await auth()
@@ -23,13 +23,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
 
-  const tailoredOutput = await draftTailoredBullets(resume.rawText, jobDescription)
+  const { finalOutput, criticScore, loopsRun } = await runCriticLoop(resume.rawText, jobDescription)
 
   const tailorJob = await prisma.tailorJob.create({
     data: {
       resumeId: resume.id,
       jobDescription,
-      tailoredOutput,
+      tailoredOutput: finalOutput,
+      criticScore,
+      loopsRun,
     },
   })
 
