@@ -1,11 +1,12 @@
 export const runtime = "nodejs"
 
+import { NextRequest, NextResponse } from "next/server"
 import { createMcpHandler } from "mcp-handler"
 import { z } from "zod"
 
 import { matchSkills } from "@/lib/skill-matching"
 
-const handler = createMcpHandler((server) => {
+const mcpHandler = createMcpHandler((server) => {
   server.registerTool(
     "search_skills",
     {
@@ -22,5 +23,16 @@ const handler = createMcpHandler((server) => {
     }
   )
 })
+
+async function handler(request: NextRequest) {
+  const expectedSecret = process.env.MCP_SHARED_SECRET
+  const authHeader = request.headers.get("authorization")
+
+  if (!expectedSecret || authHeader !== `Bearer ${expectedSecret}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
+  }
+
+  return mcpHandler(request)
+}
 
 export { handler as GET, handler as POST }

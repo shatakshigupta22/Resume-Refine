@@ -11,12 +11,10 @@ export default async function ResumePage({ params }: { params: { id: string } })
   if (!resume || resume.userId !== session.user.id) notFound()
 
   return (
-    <main style={{ maxWidth: 720, margin: "4rem auto", fontFamily: "sans-serif" }}>
+    <main className="page">
       <h1>Extracted text</h1>
       <p>Extraction method: {resume.extractionMethod}</p>
-      <pre style={{ whiteSpace: "pre-wrap", background: "#f5f5f5", padding: "1rem" }}>
-        {resume.rawText}
-      </pre>
+      <pre className="card">{resume.rawText}</pre>
       <p>
         <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job &rarr;</a>
       </p>

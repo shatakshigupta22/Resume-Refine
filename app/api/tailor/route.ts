@@ -23,17 +23,22 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Not found" }, { status: 404 })
   }
 
-  const { finalOutput, criticScore, loopsRun } = await runCriticLoop(resume.rawText, jobDescription)
+  try {
+    const { finalOutput, criticScore, loopsRun } = await runCriticLoop(resume.rawText, jobDescription)
 
-  const tailorJob = await prisma.tailorJob.create({
-    data: {
-      resumeId: resume.id,
-      jobDescription,
-      tailoredOutput: finalOutput,
-      criticScore,
-      loopsRun,
-    },
-  })
+    const tailorJob = await prisma.tailorJob.create({
+      data: {
+        resumeId: resume.id,
+        jobDescription,
+        tailoredOutput: finalOutput,
+        criticScore,
+        loopsRun,
+      },
+    })
 
-  return NextResponse.redirect(new URL(`/tailor-jobs/${tailorJob.id}`, request.url), 303)
+    return NextResponse.redirect(new URL(`/tailor-jobs/${tailorJob.id}`, request.url), 303)
+  } catch (err) {
+    console.error(`[tailor] failed to generate tailored bullets for user ${session.user.id}`, err)
+    return NextResponse.redirect(new URL(`/resumes/${resume.id}/tailor?error=1`, request.url), 303)
+  }
 }

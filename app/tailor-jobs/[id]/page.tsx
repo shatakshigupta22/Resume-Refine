@@ -14,11 +14,9 @@ export default async function TailorJobPage({ params }: { params: { id: string }
   if (!tailorJob || tailorJob.resume.userId !== session.user.id) notFound()
 
   return (
-    <main style={{ maxWidth: 720, margin: "4rem auto", fontFamily: "sans-serif" }}>
+    <main className="page">
       <h1>Tailored bullets</h1>
-      <pre style={{ whiteSpace: "pre-wrap", background: "#f5f5f5", padding: "1rem" }}>
-        {tailorJob.tailoredOutput}
-      </pre>
+      <pre className="card">{tailorJob.tailoredOutput}</pre>
     </main>
   )
 }

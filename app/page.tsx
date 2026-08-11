@@ -4,11 +4,14 @@ export default async function HomePage() {
   const session = await auth()
 
   return (
-    <main style={{ maxWidth: 480, margin: "4rem auto", fontFamily: "sans-serif" }}>
+    <main className="page">
       <h1>ResumeRefine</h1>
       {session?.user ? (
         <>
           <p>Signed in as {session.user.email}</p>
+          <p>
+            <a href="/resumes">Your resumes</a>
+          </p>
           <form
             action={async () => {
               "use server"
