@@ -230,6 +230,13 @@ button:focus-visible {
   border-color: var(--accent);
 }
 
+.badge-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
 .site-header {
   border-bottom: 1px solid var(--border);
 }

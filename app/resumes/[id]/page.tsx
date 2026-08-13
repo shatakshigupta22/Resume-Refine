@@ -19,6 +19,8 @@ export default async function ResumePage({ params }: { params: { id: string } })
       <pre className="card">{resume.rawText}</pre>
       <p>
         <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job &rarr;</a>
+        {" · "}
+        <a href={`/resumes/${resume.id}/check`}>Fit check &rarr;</a>
       </p>
     </main>
   )

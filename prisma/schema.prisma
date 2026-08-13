@@ -54,12 +54,13 @@ model VerificationToken {
 }
 
 model Resume {
-  id               String      @id @default(cuid())
+  id               String        @id @default(cuid())
   userId           String
-  user             User        @relation(fields: [userId], references: [id])
+  user             User          @relation(fields: [userId], references: [id])
   rawText          String
-  extractionMethod String      @default("text")
+  extractionMethod String        @default("text")
   tailorings       TailorJob[]
+  checks           ResumeCheck[]
 }
 
 model TailorJob {
@@ -70,6 +71,16 @@ model TailorJob {
   tailoredOutput String?
   criticScore    Int?
   loopsRun       Int      @default(0)
+}
+
+model ResumeCheck {
+  id             String   @id @default(cuid())
+  resumeId       String
+  resume         Resume   @relation(fields: [resumeId], references: [id])
+  jobDescription String?
+  score          Int
+  feedback       String
+  missingSkills  String[]
 }
 
 model Skill {

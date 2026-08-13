@@ -45,7 +45,13 @@ export default async function ResumesIndexPage() {
                 <a href={`/resumes/${resume.id}`} className="resume-card-title">
                   {label}
                 </a>
-                <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job &rarr;</a>
+                <span>
+                  <a href={`/resumes/${resume.id}`}>View</a>
+                  {" · "}
+                  <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job</a>
+                  {" · "}
+                  <a href={`/resumes/${resume.id}/check`}>Fit check</a>
+                </span>
               </li>
             )
           })}
