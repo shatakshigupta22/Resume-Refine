@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation"
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { ProseBlock } from "@/app/components/ProseBlock"
 
 export default async function ResumePage({ params }: { params: { id: string } }) {
   const session = await auth()
@@ -16,7 +17,7 @@ export default async function ResumePage({ params }: { params: { id: string } })
       <p>
         <span className="badge">extraction: {resume.extractionMethod}</span>
       </p>
-      <pre className="card">{resume.rawText}</pre>
+      <ProseBlock text={resume.rawText} />
       <p>
         <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job &rarr;</a>
         {" · "}

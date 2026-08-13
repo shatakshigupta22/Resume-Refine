@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation"
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { ProseBlock } from "@/app/components/ProseBlock"
 
 export default async function ResumeCheckPage({ params }: { params: { id: string } }) {
   const session = await auth()
@@ -19,7 +20,7 @@ export default async function ResumeCheckPage({ params }: { params: { id: string
       <p>
         <span className="badge badge-accent">score: {resumeCheck.score}/100</span>
       </p>
-      <pre className="card">{resumeCheck.feedback}</pre>
+      <ProseBlock text={resumeCheck.feedback} />
       {resumeCheck.missingSkills.length > 0 && (
         <>
           <p>Missing skills:</p>
