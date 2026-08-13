@@ -16,6 +16,9 @@ export default async function TailorJobPage({ params }: { params: { id: string }
   return (
     <main className="page">
       <h1>Tailored bullets</h1>
+      <p>
+        <span className="badge badge-accent">score: {tailorJob.criticScore ?? "—"}/100</span>
+      </p>
       <pre className="card">{tailorJob.tailoredOutput}</pre>
     </main>
   )

@@ -13,7 +13,9 @@ export default async function ResumePage({ params }: { params: { id: string } })
   return (
     <main className="page">
       <h1>Extracted text</h1>
-      <p>Extraction method: {resume.extractionMethod}</p>
+      <p>
+        <span className="badge">extraction: {resume.extractionMethod}</span>
+      </p>
       <pre className="card">{resume.rawText}</pre>
       <p>
         <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job &rarr;</a>

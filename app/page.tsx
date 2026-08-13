@@ -1,4 +1,4 @@
-import { auth, signOut } from "@/auth"
+import { auth } from "@/auth"
 
 export default async function HomePage() {
   const session = await auth()
@@ -12,19 +12,19 @@ export default async function HomePage() {
           <p>
             <a href="/resumes">Your resumes</a>
           </p>
-          <form
-            action={async () => {
-              "use server"
-              await signOut()
-            }}
-          >
-            <button type="submit">Sign out</button>
-          </form>
         </>
       ) : (
-        <p>
-          <a href="/login">Sign in</a>
-        </p>
+        <>
+          <p>
+            AI-powered resume tailoring — upload a resume, paste a job description, get bullets
+            tailored to match.
+          </p>
+          <p>
+            <a href="/login" className="btn">
+              Sign in
+            </a>
+          </p>
+        </>
       )}
     </main>
   )

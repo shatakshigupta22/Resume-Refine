@@ -1,12 +1,37 @@
 :root {
+  /* light */
   --background: #ffffff;
   --foreground: #171717;
+  --surface: #f5f5f5;
+  --border: #e0e0e0;
+  --muted: #6b6b6b;
+  --accent: #2e5cff;
+  --accent-hover: #1544e0;
+  --accent-active: #123bc7;
+  --accent-text: #2e5cff;
+  --accent-foreground: #ffffff;
+  --danger: #c0392b;
+  --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #f2f2f2;
+    --surface: #141414;
+    --border: #2a2a2a;
+    --muted: #9a9a9a;
+    --accent: #2e5cff;
+    --accent-hover: #4a72ff;
+    --accent-active: #2247d9;
+    --accent-text: #7c97ff;
+    --accent-foreground: #ffffff;
+    --danger: #ff6b6b;
+    --card-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  html {
+    color-scheme: dark;
   }
 }
 
@@ -17,9 +42,14 @@ body {
 }
 
 body {
+  /* declared here (not :root) since --font-inter/--font-geist-mono are only
+     defined on this element via next/font's className, not on an ancestor */
+  --font-sans: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -33,23 +63,28 @@ body {
 a {
   color: inherit;
   text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 2px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+a:hover,
+a:focus-visible {
+  color: var(--accent-text);
+  text-decoration-color: var(--accent-text);
 }
 
 .page {
   max-width: 640px;
-  margin: 4rem auto;
+  margin: 3rem auto;
   padding: 0 1.5rem;
 }
 
 h1 {
   font-size: 1.5rem;
+  font-weight: 600;
   margin-bottom: 1rem;
+  letter-spacing: -0.01em;
 }
 
 p {
@@ -69,64 +104,168 @@ textarea {
   font: inherit;
   width: 100%;
   padding: 0.5rem 0.75rem;
-  border: 1px solid #d0d0d0;
+  border: 1px solid var(--border);
   border-radius: 6px;
   background: var(--background);
   color: var(--foreground);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 textarea {
   resize: vertical;
 }
 
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(46, 92, 255, 0.25);
+}
+
 button {
   font: inherit;
-  padding: 0.5rem 1rem;
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
   border: none;
-  border-radius: 6px;
-  background: #171717;
-  color: #ffffff;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-foreground);
   cursor: pointer;
   align-self: flex-start;
+  transition: background-color 0.15s ease, transform 0.05s ease;
 }
 
 button:hover {
-  opacity: 0.85;
+  background: var(--accent-hover);
 }
 
-@media (prefers-color-scheme: dark) {
-  input,
-  textarea {
-    border-color: #333333;
-  }
+button:active {
+  background: var(--accent-active);
+  transform: translateY(1px);
+}
 
-  button {
-    background: #ededed;
-    color: #0a0a0a;
-  }
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 500;
+  padding: 0.6rem 1.25rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  text-decoration: none;
+  transition: background-color 0.15s ease, transform 0.05s ease;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--accent-hover);
+  color: var(--accent-foreground);
+  text-decoration: none;
+}
+
+.btn:active {
+  background: var(--accent-active);
+  transform: translateY(1px);
 }
 
 .card {
-  background: #f5f5f5;
-  border-radius: 8px;
-  padding: 1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
   white-space: pre-wrap;
-}
-
-@media (prefers-color-scheme: dark) {
-  .card {
-    background: #1a1a1a;
-  }
+  box-shadow: var(--card-shadow);
 }
 
 .error-message {
-  color: #c0392b;
+  color: var(--danger);
 }
 
 .resume-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin-bottom: 1rem;
+}
+
+.resume-list .card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  white-space: normal;
+}
+
+.resume-card-title {
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.resume-card-title:hover,
+.resume-card-title:focus-visible {
+  text-decoration: underline;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+}
+
+.badge-accent {
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.site-header form {
+  margin: 0;
+}
+
+.site-header button {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.875rem;
+}
+
+.site-header button:hover {
+  background: var(--surface);
+  color: var(--foreground);
+}
+
+.site-header button:active {
+  transform: translateY(1px);
 }
