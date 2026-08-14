@@ -31,6 +31,9 @@ export default async function CheckPage({
         />
         <button type="submit">Check fit</button>
       </form>
+      <p>
+        <a href={`/resumes/${resume.id}`}>Back to resume</a>
+      </p>
     </main>
   )
 }

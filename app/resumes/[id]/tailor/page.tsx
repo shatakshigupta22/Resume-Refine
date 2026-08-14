@@ -29,6 +29,9 @@ export default async function TailorPage({
         <textarea name="jobDescription" rows={12} placeholder="Paste the job description here..." required />
         <button type="submit">Generate tailored bullets</button>
       </form>
+      <p>
+        <a href={`/resumes/${resume.id}`}>Back to resume</a>
+      </p>
     </main>
   )
 }
