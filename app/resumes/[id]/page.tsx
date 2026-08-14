@@ -23,6 +23,9 @@ export default async function ResumePage({ params }: { params: { id: string } })
         {" · "}
         <a href={`/resumes/${resume.id}/check`}>Fit check &rarr;</a>
       </p>
+      <p>
+        <a href="/resumes">Back to all resumes</a>
+      </p>
     </main>
   )
 }
