@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation"
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
 import { ProseBlock } from "@/app/components/ProseBlock"
+import { SubmitForm } from "@/app/components/SubmitForm"
 
 export default async function TailorJobPage({
   params,
@@ -33,12 +34,15 @@ export default async function TailorJobPage({
       <p>
         <a href={`/resumes/${tailorJob.resumeId}`}>Back to resume</a>
         {" · "}
-        <a href={`/resumes/${tailorJob.resumeId}/check`}>Fit check this resume</a>
+        <a href={`/resumes/${tailorJob.resumeId}/check`}>Fit check original resume</a>
       </p>
-      <form action="/api/check-tailored" method="POST">
+      <SubmitForm
+        action="/api/check-tailored"
+        buttonText="Fit check these tailored bullets"
+        loadingText="Checking fit..."
+      >
         <input type="hidden" name="tailorJobId" value={tailorJob.id} />
-        <button type="submit">Check fit with these bullets</button>
-      </form>
+      </SubmitForm>
     </main>
   )
 }

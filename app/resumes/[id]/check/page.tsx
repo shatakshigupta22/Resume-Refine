@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation"
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { SubmitForm } from "@/app/components/SubmitForm"
 
 export default async function CheckPage({
   params,
@@ -22,15 +23,14 @@ export default async function CheckPage({
       {searchParams.error && (
         <p className="error-message">Something went wrong checking this resume. Please try again.</p>
       )}
-      <form action="/api/check" method="POST">
+      <SubmitForm action="/api/check" buttonText="Check fit" loadingText="Checking fit...">
         <input type="hidden" name="resumeId" value={resume.id} />
         <textarea
           name="jobDescription"
           rows={12}
           placeholder="Paste a job description for a targeted check, or leave blank for a general resume review"
         />
-        <button type="submit">Check fit</button>
-      </form>
+      </SubmitForm>
       <p>
         <a href={`/resumes/${resume.id}`}>Back to resume</a>
       </p>

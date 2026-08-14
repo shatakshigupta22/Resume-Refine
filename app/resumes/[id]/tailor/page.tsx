@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation"
 
 import { auth } from "@/auth"
 import { prisma } from "@/lib/prisma"
+import { SubmitForm } from "@/app/components/SubmitForm"
 
 export default async function TailorPage({
   params,
@@ -24,11 +25,14 @@ export default async function TailorPage({
           Something went wrong generating your tailored bullets. Please try again.
         </p>
       )}
-      <form action="/api/tailor" method="POST">
+      <SubmitForm
+        action="/api/tailor"
+        buttonText="Generate tailored bullets"
+        loadingText="Generating... this can take up to 30 seconds"
+      >
         <input type="hidden" name="resumeId" value={resume.id} />
         <textarea name="jobDescription" rows={12} placeholder="Paste the job description here..." required />
-        <button type="submit">Generate tailored bullets</button>
-      </form>
+      </SubmitForm>
       <p>
         <a href={`/resumes/${resume.id}`}>Back to resume</a>
       </p>
