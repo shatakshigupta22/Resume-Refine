@@ -33,6 +33,11 @@ export default async function ResumeCheckPage({ params }: { params: { id: string
           </div>
         </>
       )}
+      <p>
+        <a href={`/resumes/${resumeCheck.resumeId}`}>Back to resume</a>
+        {" · "}
+        <a href={`/resumes/${resumeCheck.resumeId}/tailor`}>Tailor for a job</a>
+      </p>
     </main>
   )
 }
