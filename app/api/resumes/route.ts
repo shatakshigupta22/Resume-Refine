@@ -1,3 +1,5 @@
+export const maxDuration = 60
+
 import { NextRequest, NextResponse } from "next/server"
 import { getDocumentProxy, extractText } from "unpdf"
 
@@ -6,7 +8,7 @@ import { prisma } from "@/lib/prisma"
 import { isParsingGarbage } from "@/lib/parsing-quality"
 import { extractTextViaVision } from "@/lib/vision-extraction"
 
-const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024 // 10MB
+const MAX_FILE_SIZE_BYTES = 4 * 1024 * 1024 // 4MB — Vercel serverless functions cap request bodies at 4.5MB
 const PDF_MAGIC_BYTES = [0x25, 0x50, 0x44, 0x46] // "%PDF"
 
 export async function POST(request: NextRequest) {
@@ -23,7 +25,7 @@ export async function POST(request: NextRequest) {
   }
 
   if (file.size > MAX_FILE_SIZE_BYTES) {
-    return NextResponse.json({ error: "File exceeds the 10MB size limit" }, { status: 400 })
+    return NextResponse.json({ error: "File exceeds the 4MB size limit" }, { status: 400 })
   }
 
   const buffer = new Uint8Array(await file.arrayBuffer())
