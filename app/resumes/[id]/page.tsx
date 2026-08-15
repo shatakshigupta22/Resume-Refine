@@ -15,6 +15,13 @@ export default async function ResumePage({ params }: { params: { id: string } })
     <main className="page">
       <h1>Extracted text</h1>
       <p>
+        <a href={`/resumes/${resume.id}/tailor`}>Tailor for a job &rarr;</a>
+        {" · "}
+        <a href={`/resumes/${resume.id}/check`}>Fit check &rarr;</a>
+        {" · "}
+        <a href="/resumes">Back to all resumes</a>
+      </p>
+      <p>
         <span className="badge">extraction: {resume.extractionMethod}</span>
       </p>
       <ProseBlock text={resume.rawText} />

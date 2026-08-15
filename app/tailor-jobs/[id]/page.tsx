@@ -28,6 +28,11 @@ export default async function TailorJobPage({
         <p className="error-message">Something went wrong checking these bullets. Please try again.</p>
       )}
       <p>
+        <a href={`/resumes/${tailorJob.resumeId}`}>Back to resume</a>
+        {" · "}
+        <a href={`/resumes/${tailorJob.resumeId}/check`}>Fit check original resume</a>
+      </p>
+      <p>
         <span className="badge badge-accent">score: {tailorJob.criticScore ?? "—"}/100</span>
       </p>
       <ProseBlock text={tailorJob.tailoredOutput ?? ""} />

@@ -18,6 +18,11 @@ export default async function ResumeCheckPage({ params }: { params: { id: string
     <main className="page">
       <h1>Fit check results</h1>
       <p>
+        <a href={`/resumes/${resumeCheck.resumeId}`}>Back to resume</a>
+        {" · "}
+        <a href={`/resumes/${resumeCheck.resumeId}/tailor`}>Tailor for a job</a>
+      </p>
+      <p>
         <span className="badge badge-accent">score: {resumeCheck.score}/100</span>
       </p>
       <ProseBlock text={resumeCheck.feedback} />
